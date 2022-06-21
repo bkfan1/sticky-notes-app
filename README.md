@@ -15,3 +15,4 @@ Taking notes app created with React, LocalStorage and Tailwind CSS.
 https://imgur.com/a/muDOtXV
 
 ## Live Demo
+https://sticky-notes-app.vercel.app/
