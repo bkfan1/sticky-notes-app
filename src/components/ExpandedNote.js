@@ -4,21 +4,30 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 export default function ExpandedNote({ id, noteData, handleClickModalBtn }) {
-  const { handleChangeNoteData, handleDeleteNote} = useContext(NotesContext);
+  const { handleChangeNoteData, handleDeleteNote } = useContext(NotesContext);
 
   const [viewAsMarkDown, setViewAsMarkDown] = useState(false);
 
-  const handleDeleteExpandedNote = (e, id)=>{
+  const handleDeleteExpandedNote = (e, id) => {
     handleClickModalBtn();
     handleDeleteNote(e, id);
-  }
+  };
 
   return (
     <>
       <figure className={`flex flex-col justify-between w-96 bg-slate-500`}>
         <header className="flex justify-between items-center w-full bg-slate-700 border-t-8 border-slate-800 px-2 py-1">
-          <button onClick={()=>setViewAsMarkDown(!viewAsMarkDown)} title={`${viewAsMarkDown ? "View as plain text" : "View as Markdown"}`}>
-            <i className={`${viewAsMarkDown ? "bi bi-fonts" : "bi bi-markdown"} text-xl text-white`} />
+          <button
+            onClick={() => setViewAsMarkDown(!viewAsMarkDown)}
+            title={`${
+              viewAsMarkDown ? "View as plain text" : "View as Markdown"
+            }`}
+          >
+            <i
+              className={`${
+                viewAsMarkDown ? "bi bi-fonts" : "bi bi-markdown"
+              } text-xl text-white`}
+            />
           </button>
 
           <input
@@ -57,7 +66,10 @@ export default function ExpandedNote({ id, noteData, handleClickModalBtn }) {
         )}
 
         <section className="flex justify-between text-white p-2">
-          <button title="Delete note" onClick={(e)=>handleDeleteExpandedNote(e, id)}>
+          <button
+            title="Delete note"
+            onClick={(e) => handleDeleteExpandedNote(e, id)}
+          >
             <i className="bi bi-trash" />
           </button>
           <p title="Date of creation" className="font-bold">
