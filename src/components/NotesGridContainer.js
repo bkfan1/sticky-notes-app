@@ -1,16 +1,10 @@
 import { useContext } from "react";
-
 import { NotesContext } from "../context/NotesContext";
 import SingleNote from "./SingleNote";
 
 export default function NotesGridContainer() {
-  const {
-    notes,
-    filteredNotes,
-    searchValue,
-    handleAddNote,
-
-  } = useContext(NotesContext);
+  const { notes, filteredNotes, searchValue, handleAddNote } =
+    useContext(NotesContext);
 
   return (
     <>
@@ -19,19 +13,26 @@ export default function NotesGridContainer() {
           filteredNotes.length > 4 ? "place-items-center items-center" : ""
         } gap-8 p-4 `}
       >
-
         {searchValue.length === 0 ? (
           <>
-          {notes.map((note)=>(<SingleNote key={note.id} id={note.id} noteData={note} />))}
+            {notes.map((note) => (
+              <SingleNote key={note.id} id={note.id} noteData={note} />
+            ))}
           </>
         ) : (
           <>
-          {filteredNotes.map((note)=>(<SingleNote key={note.id} id={note.id} noteData={note} />))}
+            {filteredNotes.map((note) => (
+              <SingleNote key={note.id} id={note.id} noteData={note} />
+            ))}
           </>
         )}
 
-        <button onClick={handleAddNote} className="w-60 h-52 rounded bg-slate-800 hover:bg-slate-900"><i className="bi bi-plus text-white text-4xl" /></button>
-       
+        <button
+          onClick={handleAddNote}
+          className="w-60 h-52 rounded bg-slate-800 hover:bg-slate-900"
+        >
+          <i className="bi bi-plus text-white text-4xl" />
+        </button>
       </section>
     </>
   );
