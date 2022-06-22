@@ -4,11 +4,6 @@
 
 @import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
-
-.originalStyles{
-  list-style:circle;
-}
-
 .singleNote::-webkit-scrollbar {
   display: none;
 }
@@ -29,7 +24,6 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-
 
 .modalOverlay{
   background-color: rgba(0, 0, 0, 0.767);
