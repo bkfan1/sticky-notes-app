@@ -1,126 +1,65 @@
 import { useEffect, useState } from "react";
 import { createContext } from "react";
+import { initialNotes } from "../utils/constants";
 import { nanoid } from "nanoid";
 
 export const NotesContext = createContext();
 
-const initialNotes = [
-  {
-    id: "we41984z",
-    title: "Web technologies",
-    body: `
-  - HTML
-  - CSS
-  - Javascript
-  - React`,
-    createdAt: "21/6/2022",
-  },
-
-  {
-    id: "asd459zcj",
-    title: "Todo",
-    body: `
-  - [x] Learn data structures
-  - [x] Learn algorithms
-  - [ ] Learn Big O notation
-  `,
-    createdAt: "21/6/2022",
-  },
-  {
-    id: "cjknfdf348",
-    title: "Best quotes",
-    body: `
-  > This is a quote - Somebody
-
-  > Hello world - Your first computer program
-
-  > Hire me - Jackson Paredes Ferranti (@bkfan1)
-  `,
-    createdAt: "21/6/2022",
-  },
-  {
-    id: "jjfhei13",
-    title: "Headings",
-    body: `
-  # Heading 1
-  ## Heading 2
-  ### Heading 3
-  ### Heading 4
-  #### Heading 5
-  ##### Heading 6
-  
-  `,
-    createdAt: "21/6/2022",
-  },
-
-  {
-    id: "ksalwei35688",
-    title: "Bold and Italic",
-    body: `
-  The quick brown fox *jumps over* the lazy dog
-  The quick brown fox **jumps over** the lazy dog
-  
-  `,
-    createdAt: "21/6/2022",
-  },
-  {
-    id: "wajieox48456889",
-    title: "Useful links",
-    body: `
-  [Google](https://www.google.com)
-  [Youtube](https://www.youtube.com)
-  [Bkfan1 Profile](https://github.com/bkfan1)
-  
-  `,
-    createdAt: "21/6/2022",
-  },
-
-  {id:"linuxTorvalds99", title:"A picture", body:"![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/a/af/Tux.png?20070323032439)", createdAt:"21/6/2022"}
-];
-
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState(initialNotes);
-  const [searchValue, setSearchValue] = useState("");
   const [filteredNotes, setFilteredNotes] = useState([]);
 
-  useEffect(() => {
-    const foundNotes = notes.filter(
-      (note) =>
-        note.body === searchValue ||
-        note.body.includes(searchValue) ||
-        note.title === searchValue ||
-        note.title.includes(searchValue) ||
-        note.createdAt === searchValue ||
-        note.createdAt.includes(searchValue)
-    );
+  const [searchValue, setSearchValue] = useState("");
 
-    setFilteredNotes(foundNotes);
+  useEffect(() => {
+    const updateFilteredNotes = () => {
+      const foundNotes = notes.filter(
+        (note) =>
+          note.body === searchValue ||
+          note.body.includes(searchValue) ||
+          note.title === searchValue ||
+          note.title.includes(searchValue) ||
+          note.createdAt === searchValue ||
+          note.createdAt.includes(searchValue)
+      );
+
+      setFilteredNotes(foundNotes);
+    };
+
+    updateFilteredNotes();
+
   }, [notes, searchValue]);
+
+  useEffect(() => {
+    const getSavedNotesFromLocalStorage = () => {
+      const ls = localStorage;
+      const savedNotes = ls.getItem("notes");
+      if (savedNotes) {
+        const parsedNotes = JSON.parse(savedNotes);
+        setNotes(parsedNotes);
+      }
+    };
+
+    getSavedNotesFromLocalStorage();
+
+  }, []);
+
+  useEffect(() => {
+    const setNotesInLocalStorage = () => {
+      const ls = localStorage;
+      const stringifiedNotes = JSON.stringify(notes);
+      ls.setItem("notes", stringifiedNotes);
+    };
+
+    setNotesInLocalStorage();
+    
+  }, [notes]);
 
   const searchValueOnChange = (e) => {
     setSearchValue(e.target.value);
   };
 
-  useEffect(() => {
-    const ls = localStorage;
-    const savedNotes = ls.getItem("notes");
-    if (savedNotes) {
-      const parsedNotes = JSON.parse(savedNotes);
-      setNotes(parsedNotes);
-    }
-  }, []);
-
-  useEffect(() => {
-    const ls = localStorage;
-    const stringifiedNotes = JSON.stringify(notes);
-    ls.setItem("notes", stringifiedNotes);
-  }, [notes]);
-
   const handleAddNote = () => {
-    if (searchValue.length > 0) {
-      setSearchValue("");
-    }
-
     const d = new Date();
 
     const newNote = {
