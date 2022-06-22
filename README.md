@@ -11,6 +11,8 @@ Taking notes app created with React, LocalStorage and Tailwind CSS.
 - Search for notes based on a term (such as its title, date of creation, or word included in it).
 
 
+<img src="https://i.imgur.com/pf0ik7K.png" alt="Sticky Notes App Image Preview"/>
+
 ## Gallery
 https://imgur.com/a/muDOtXV
 
