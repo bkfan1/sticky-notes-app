@@ -18,21 +18,20 @@ export default function NotesGridContainer() {
             {notes.map((note) => (
               <SingleNote key={note.id} id={note.id} noteData={note} />
             ))}
+            <button
+              onClick={handleAddNote}
+              className="w-60 h-52 rounded bg-slate-800 hover:bg-slate-900"
+            >
+              <i className="bi bi-plus text-white text-4xl" />
+            </button>
           </>
         ) : (
           <>
-            {filteredNotes.map((note) => (
+            {filteredNotes.length >= 1 ? (filteredNotes.map((note) => (
               <SingleNote key={note.id} id={note.id} noteData={note} />
-            ))}
+            ))) : <h1 className="text-2xl text-white font-bold"><i className="bi bi-emoji-frown-fill"/> No search results with that term.</h1>}
           </>
         )}
-
-        <button
-          onClick={handleAddNote}
-          className="w-60 h-52 rounded bg-slate-800 hover:bg-slate-900"
-        >
-          <i className="bi bi-plus text-white text-4xl" />
-        </button>
       </section>
     </>
   );
